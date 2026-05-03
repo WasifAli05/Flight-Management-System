@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SkyTrack — Flight Management System</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<button id="sb-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- ═══════════════════ SIDEBAR ═══════════════════ -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-main">Sky<span>Track</span></div>
+    <div class="sb-logo-sub">DSA FLIGHT SYSTEM</div>
+  </div>
+  <div class="sb-status"><span class="sb-dot"></span>ALL SYSTEMS OPERATIONAL</div>
+
+  <nav class="sb-nav">
+    <div class="sb-section">MAIN</div>
+    <a class="sb-link active" onclick="showSec('home')">
+      <span class="icon">🏠</span> Dashboard
+    </a>
+    <a class="sb-link" onclick="showSec('flights')">
+      <span class="icon">✈️</span> Flights
+    </a>
+
+    <div class="sb-section">DSA MODULES</div>
+    <a class="sb-link" onclick="showSec('graph')">
+      <span class="icon">◈</span> Airline Route Network
+    </a>
+    <a class="sb-link" onclick="showSec('linkedlist')">
+      <span class="icon">⊷</span> Flight Chain System
+    </a>
+    <a class="sb-link" onclick="showSec('queue')">
+      <span class="icon">⊞</span> Boarding Management System
+    </a>
+    <a class="sb-link" onclick="showSec('stack')">
+      <span class="icon">⊟</span> Operation History SystemStack
+    </a>
+    <a class="sb-link" onclick="showSec('bst')">
+      <span class="icon">⊹</span> Fare Index Engine
+    </a>
+    <a class="sb-link" onclick="showSec('hashing')">
+      <span class="icon">⊠</span>Flight Lookup Engine
+    </a>
+    <a class="sb-link" onclick="showSec('sorting')">
+      <span class="icon">⊿</span> Fare Optimization Engine
+    </a>
+    <a class="sb-link" onclick="showSec('seats')">
+      <span class="icon">⊡</span> Aircraft Seat System
+    </a>
+  </nav>
+
+  <div class="sb-footer">
+    <div id="sb-clock" style="margin-bottom:4px">00:00:00</div>
+    <div>DSA Project &nbsp;·&nbsp; HTML CSS JS</div>
+  </div>
+</aside>
+
+<!-- ═══════════════════ MAIN ═══════════════════ -->
+<div id="main">
+
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <div class="tb-title">SKYTRACK / <span id="tb-cur">DASHBOARD</span></div>
+    <div class="tb-stats">
+      <div class="tb-stat">Flights: <b id="ts-fl">0</b></div>
+      <div class="tb-stat">Queue: <b id="ts-q">0</b></div>
+      <div class="tb-stat">Routes: <b id="ts-r">0</b></div>
+    </div>
+  </div>
+
+  <!-- ══════ HOME ══════ -->
+  <section class="section active" id="sec-home">
+    <div class="hero-eyebrow">✈ FLIGHT MANAGEMENT SYSTEM — DATA STRUCTURES & ALGORITHMS</div>
+    <h1 class="hero-title">Welcome to<br/><span>SkyTrack</span></h1>
+    <p class="hero-desc">A complete DSA-powered flight management system built with HTML, CSS, JavaScript & Bootstrap. Every module demonstrates a real data structure in action — from Arrays to Graphs, Linked Lists to Hash Tables.</p>
+    <div class="hero-badges">
+     
+    </div>
+
+    <!-- STATS -->
+    <div class="row g-3 mb-4" style="max-width:900px">
+      <div class="col-6 col-md-3"><div class="stat-card"><div class="stat-n" style="color:var(--blue)" id="h-tf">0</div><div class="stat-l">Total Flights</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card"><div class="stat-n" style="color:var(--green)" id="h-af">0</div><div class="stat-l">Active</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card"><div class="stat-n" style="color:var(--amber)" id="h-pq">0</div><div class="stat-l">In Queue</div></div></div>
+      <div class="col-6 col-md-3"><div class="stat-card"><div class="stat-n" style="color:var(--rose)" id="h-gr">0</div><div class="stat-l">Graph Routes</div></div></div>
+    </div>
+
+    <div class="hero-cards">
+      <div class="hero-card" onclick="showSec('flights')"><div class="hc-icon">✈️</div><div class="hc-name">Flights</div><div class="hc-dsa">ARRAY</div></div>
+      <div class="hero-card" onclick="showSec('graph')"><div class="hc-icon">🗺️</div><div class="hc-name">Graph Routes</div><div class="hc-dsa">ADJ LIST</div></div>
+      <div class="hero-card" onclick="showSec('linkedlist')"><div class="hc-icon">🔗</div><div class="hc-name">Linked List</div><div class="hc-dsa">NODES + PTR</div></div>
+      <div class="hero-card" onclick="showSec('queue')"><div class="hc-icon">👥</div><div class="hc-name">Boarding Queue</div><div class="hc-dsa">FIFO</div></div>
+      <div class="hero-card" onclick="showSec('stack')"><div class="hc-icon">📚</div><div class="hc-name">Ops Stack</div><div class="hc-dsa">LIFO</div></div>
+      <div class="hero-card" onclick="showSec('bst')"><div class="hc-icon">🌳</div><div class="hc-name">BST Tree</div><div class="hc-dsa">BINARY TREE</div></div>
+      <div class="hero-card" onclick="showSec('hashing')"><div class="hc-icon">🔑</div><div class="hc-name">Hash Table</div><div class="hc-dsa">O(1) LOOKUP</div></div>
+      <div class="hero-card" onclick="showSec('sorting')"><div class="hc-icon">📊</div><div class="hc-name">Sorting Viz</div><div class="hc-dsa">MULTI-ALGO</div></div>
+      <div class="hero-card" onclick="showSec('seats')"><div class="hc-icon">💺</div><div class="hc-name">Seat Map</div><div class="hc-dsa">2D ARRAY</div></div>
+    </div>
+  </section>
+
+  <!-- ══════ FLIGHTS ══════ -->
+  <section class="section" id="sec-flights">
+    <div class="sec-header">
+      <div class="sec-eyebrow">DATA STRUCTURE</div>
+      <div class="sec-title">Flight Registry <span style="color:var(--blue)">— Array</span></div>
+      <div class="sec-desc">All flights stored in a dynamic array. O(1) push, O(n) search, O(n log n) sort.</div>
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="panel">
+          <div class="panel-title">➕ ADD FLIGHT <span class="ptag pt-blue">ARRAY.push()</span></div>
+          <div class="mb-2"><label>Flight ID</label><input class="form-control" id="fi" placeholder="PK-303"/></div>
+          <div class="row g-2 mb-2">
+            <div class="col-6"><label>From</label>
+              <select class="form-select" id="ff"><option>KHI</option><option>LHE</option><option>ISB</option><option>DXB</option><option>DOH</option><option>LHR</option><option>JFK</option></select></div>
+            <div class="col-6"><label>To</label>
+              <select class="form-select" id="ft"><option>LHE</option><option>KHI</option><option>ISB</option><option>DXB</option><option>DOH</option><option>LHR</option><option>JFK</option></select></div>
+          </div>
+          <div class="row g-2 mb-2">
+            <div class="col-6"><label>Departure</label><input class="form-control" id="fd" type="time" value="09:00"/></div>
+            <div class="col-6"><label>Price ₨</label><input class="form-control" id="fp" type="number" placeholder="25000"/></div>
+          </div>
+          <div class="mb-3"><label>Status</label>
+            <select class="form-select" id="fs"><option>ON TIME</option><option>DELAYED</option><option>BOARDING</option><option>CANCELLED</option></select></div>
+          <button class="btn-s btn-blue w-100" onclick="addFlight()">➕ PUSH TO ARRAY</button>
+        </div>
+        <div class="panel">
+          <div class="panel-title">🔍 SEARCH & SORT</div>
+          <input class="form-control mb-2" id="fsearch" placeholder="Search ID / From / To..." oninput="searchFlights()"/>
+          <div class="d-flex gap-2">
+            <button class="btn-s btn-amber flex-fill" onclick="sortPrice()">SORT PRICE ↑</button>
+            <button class="btn-s btn-blue flex-fill" onclick="sortTime()">SORT TIME ↑</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="panel">
+          <div class="panel-title">📋 ARRAY CONTENTS <span class="ptag pt-green">LEN: <span id="alen">0</span></span></div>
+          <div style="overflow-x:auto">
+            <table class="xt">
+              <thead><tr><th>IDX</th><th>FLIGHT ID</th><th>FROM</th><th>TO</th><th>TIME</th><th>PRICE</th><th>STATUS</th><th>DEL</th></tr></thead>
+              <tbody id="ftbody"></tbody>
+            </table>
+          </div>
+          <div class="mt-2" style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim)">
+            flights[] → [<span id="farrstate" style="color:var(--blue)"></span>]
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ GRAPH ══════ -->
+  <section class="section" id="sec-graph">
+    <div class="sec-header">
+      <div class="sec-eyebrow">DATA STRUCTURE</div>
+      <div class="sec-title">Airport Routes <span style="color:var(--amber)">— Graph (Adjacency List)</span></div>
+      <div class="sec-desc">Airports = vertices, routes = weighted edges. BFS explores level-by-level. DFS dives deep first.</div>
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-4">
+        <div class="panel">
+          <div class="panel-title">ADD ROUTE <span class="ptag pt-amber">ADJ LIST</span></div>
+          <div class="mb-2"><label>From</label>
+            <select class="form-select" id="gf"><option>KHI</option><option>LHE</option><option>ISB</option><option>DXB</option><option>DOH</option><option>LHR</option><option>JFK</option></select></div>
+          <div class="mb-2"><label>To</label>
+            <select class="form-select" id="gt"><option>LHE</option><option>KHI</option><option>ISB</option><option>DXB</option><option>DOH</option><option>LHR</option><option>JFK</option></select></div>
+          <div class="mb-3"><label>Distance km</label><input class="form-control" id="gd" type="number" placeholder="1200"/></div>
+          <div class="mb-3"><label>Flight Time (hrs)</label><input class="form-control" id="gt2" type="number" placeholder="3"/></div>
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn-s btn-blue flex-fill" onclick="addRoute()">ADD EDGE</button>
+            <button class="btn-s btn-amber flex-fill" onclick="runBFS()">▶ BFS</button>
+            <button class="btn-s btn-green flex-fill" onclick="runDFS()">▶ DFS</button>
+            <button class="btn-s btn-rose flex-fill" onclick="findIndirect()">🔍 FIND ROUTES</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">ADJACENCY LIST</div>
+          <div class="logbox" id="gadj" style="height:200px"></div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="panel">
+          <div class="panel-title">ROUTE MAP VISUALIZATION <span class="ptag pt-amber">CANVAS</span></div>
+          <canvas id="gCanvas"></canvas>
+          <div class="logbox mt-2" id="glog"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ LINKED LIST ══════ -->
+  <section class="section" id="sec-linkedlist">
+    <div class="sec-header">
+      <div class="sec-eyebrow">DATA STRUCTURE</div>
+      <div class="sec-title">Flight Chain <span style="color:var(--blue)">— Singly Linked List</span></div>
+      <div class="sec-desc">Each node = flight + pointer to next. HEAD → N1 → N2 → ... → NULL. Dynamic size, no index needed.</div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">NODE OPERATIONS <span class="ptag pt-blue">INSERT · DELETE · REVERSE</span></div>
+      <div class="row g-2 mb-3">
+        <div class="col-md-3"><input class="form-control" id="llv" placeholder="Flight ID"/></div>
+        <div class="col-md-2">
+          <select class="form-select" id="llp">
+            <option value="head">At HEAD</option>
+            <option value="tail">At TAIL</option>
+            <option value="idx">At Index</option>
+          </select>
+        </div>
+        <div class="col-md-1"><input class="form-control" id="lli" type="number" placeholder="Idx" value="0"/></div>
+        <div class="col-md-2"><button class="btn-s btn-blue w-100" onclick="llIns()">INSERT</button></div>
+        <div class="col-md-2"><button class="btn-s btn-rose w-100" onclick="llDelH()">DEL HEAD</button></div>
+        <div class="col-md-2"><button class="btn-s btn-green w-100" onclick="llRev()">REVERSE</button></div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);margin-bottom:6px">
+        Nodes: <span id="llsz" style="color:var(--amber)">0</span> &nbsp;|&nbsp; HEAD → ... → NULL
+      </div>
+      <div class="chain" id="llviz"></div>
+      <div class="logbox mt-3" id="lllog"></div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="panel">
+          <div class="panel-title" style="color:var(--amber)">COMPLEXITY</div>
+          <table class="ctable">
+            <thead><tr><th>OPERATION</th><th>TIME</th><th>NOTES</th></tr></thead>
+            <tbody>
+              <tr><td>Insert at HEAD</td><td>O(1)</td><td>Just update head pointer</td></tr>
+              <tr><td>Insert at TAIL</td><td>O(n)</td><td>Traverse to end</td></tr>
+              <tr><td>Delete HEAD</td><td>O(1)</td><td>Move head forward</td></tr>
+              <tr><td>Search</td><td>O(n)</td><td>Linear traversal</td></tr>
+              <tr><td>Reverse</td><td>O(n)</td><td>Flip all .next pointers</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel">
+          <div class="panel-title" style="color:var(--blue)">LINKED LIST STRUCTURE</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);line-height:2">
+            <span style="color:var(--blue)">class Node {</span><br>
+            &nbsp;&nbsp;data = flightID<br>
+            &nbsp;&nbsp;next = pointer<br>
+            <span style="color:var(--blue)">}</span><br>
+            head → [PK303|→] → [EK607|→] → NULL<br><br>
+            ✈ Use: flight sequences, undo chains
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ QUEUE ══════ -->
+  <section class="section" id="sec-queue">
+    <div class="sec-header">
+      <div class="sec-eyebrow">DATA STRUCTURE</div>
+      <div class="sec-title">Boarding Queue <span style="color:var(--green)">— FIFO Queue</span></div>
+      <div class="sec-desc">First In First Out. Passengers join at rear, board from front. Used for runway queues and ATC requests.</div>
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-7">
+        <div class="panel">
+          <div class="panel-title">QUEUE OPERATIONS <span class="ptag pt-green">ENQUEUE · DEQUEUE</span></div>
+          <div class="d-flex gap-2 mb-3">
+            <input class="form-control" id="qn" placeholder="Passenger name"/>
+            <button class="btn-s btn-blue" onclick="enq()">ENQUEUE →</button>
+          </div>
+          <div class="d-flex gap-2 mb-3">
+            <button class="btn-s btn-rose flex-fill" onclick="deq()">← DEQUEUE (BOARD)</button>
+            <button class="btn-s btn-green flex-fill" onclick="qpeek()">PEEK FRONT</button>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--dim);margin-bottom:6px">
+            FRONT ◄ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ► REAR
+          </div>
+          <div class="chain" id="qviz" style="min-height:54px"></div>
+          <div class="logbox mt-3" id="qlog"></div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="panel">
+          <div class="panel-title" style="color:var(--green)">QUEUE COMPLEXITY</div>
+          <table class="ctable">
+            <thead><tr><th>OP</th><th>TIME</th><th>WHERE</th></tr></thead>
+            <tbody>
+              <tr><td>Enqueue</td><td>O(1)</td><td>Add to rear</td></tr>
+              <tr><td>Dequeue</td><td>O(1)</td><td>Remove from front</td></tr>
+              <tr><td>Peek</td><td>O(1)</td><td>View front</td></tr>
+              <tr><td>Search</td><td>O(n)</td><td>Linear scan</td></tr>
+            </tbody>
+          </table>
+          <div class="div-line"></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);line-height:2">
+            ✈ FLIGHT USE CASES:<br>
+            · Passenger boarding order<br>
+            · Runway takeoff line<br>
+            · Baggage handling<br>
+            · ATC clearance requests
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ STACK ══════ -->
+ <!-- ══════ STACK ══════ -->
+  <section class="section" id="sec-stack">
+    <div class="sec-header">
+      <div class="sec-eyebrow">DATA STRUCTURE</div>
+      <div class="sec-title">Operation History <span style="color:var(--amber)">— LIFO Stack</span></div>
+      <div class="sec-desc">Real flight system operations — every action is logged. UNDO anytime with POP.</div>
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-7">
+        <div class="panel">
+          <div class="panel-title">✈ FLIGHT OPERATIONS <span class="ptag pt-amber">PUSH · POP · UNDO</span></div>
+
+          <!-- Quick Action Buttons -->
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:8px">QUICK ACTIONS:</div>
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <button class="btn-s btn-blue" onclick="quickPush('BOOK')">✈ BOOK FLIGHT</button>
+            <button class="btn-s btn-green" onclick="quickPush('CHECKIN')">✅ CHECK-IN</button>
+            <button class="btn-s btn-amber" onclick="quickPush('DELAY')">⏱ DELAY FLIGHT</button>
+            <button class="btn-s btn-rose" onclick="quickPush('CANCEL')">❌ CANCEL FLIGHT</button>
+            <button class="btn-s btn-blue" onclick="quickPush('SEAT')">💺 CHANGE SEAT</button>
+            <button class="btn-s btn-green" onclick="quickPush('BOARD')">🚪 BOARDING</button>
+          </div>
+
+          <div class="div-line"></div>
+
+          <!-- Manual Input -->
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:8px">MANUAL OPERATION:</div>
+          <div class="d-flex gap-2 mb-3">
+            <input class="form-control" id="sto" placeholder="e.g. UPGRADE SEAT PK303 A1→B2"/>
+            <button class="btn-s btn-blue" onclick="spush()">PUSH ↑</button>
+          </div>
+
+          <div class="d-flex gap-2 mb-3">
+            <button class="btn-s btn-rose flex-fill" onclick="spop()">↓ POP (UNDO LAST)</button>
+            <button class="btn-s btn-amber flex-fill" onclick="speek()">👁 PEEK TOP</button>
+            <button class="btn-s btn-green flex-fill" onclick="sundoAll()">⏮ UNDO ALL</button>
+          </div>
+
+          <!-- Stack Stats -->
+          <div class="d-flex gap-3 mb-3" style="font-family:'JetBrains Mono',monospace;font-size:.65rem">
+            <span>Total Ops: <span id="st-total" style="color:var(--amber)">0</span></span>
+            <span>Undone: <span id="st-undone" style="color:var(--rose)">0</span></span>
+            <span>Stack Size: <span id="st-size" style="color:var(--green)">0</span></span>
+          </div>
+
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--dim);margin-bottom:6px">
+            STACK (TOP → BOTTOM):
+          </div>
+          <div id="stviz" style="display:flex;flex-direction:column;gap:4px;max-height:240px;overflow-y:auto"></div>
+          <div class="logbox mt-3" id="stlog"></div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="panel">
+          <div class="panel-title" style="color:var(--amber)">COMPLEXITY</div>
+          <table class="ctable">
+            <thead><tr><th>OP</th><th>TIME</th><th>DESC</th></tr></thead>
+            <tbody>
+              <tr><td>Push</td><td>O(1)</td><td>Add to top</td></tr>
+              <tr><td>Pop</td><td>O(1)</td><td>Remove top</td></tr>
+              <tr><td>Peek</td><td>O(1)</td><td>View top</td></tr>
+              <tr><td>Size</td><td>O(1)</td><td>Count items</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="panel mt-3">
+          <div class="panel-title" style="color:var(--amber)">✈ REAL USE CASES</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);line-height:2.2">
+            <span style="color:var(--green)">▸</span> Undo last booking mistake<br>
+            <span style="color:var(--green)">▸</span> Revert seat assignment<br>
+            <span style="color:var(--green)">▸</span> Cancel check-in process<br>
+            <span style="color:var(--green)">▸</span> Flight delay rollback<br>
+            <span style="color:var(--green)">▸</span> DFS route backtracking<br>
+            <span style="color:var(--green)">▸</span> Browser back in booking<br>
+            <span style="color:var(--amber)">▸</span> Boarding gate changes<br>
+            <span style="color:var(--amber)">▸</span> Baggage re-assignment
+          </div>
+        </div>
+
+        <div class="panel mt-3">
+          <div class="panel-title" style="color:var(--blue)">UNDO HISTORY</div>
+          <div class="logbox" id="undo-log" style="height:120px"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ BST ══════ -->
+  <section class="section" id="sec-bst">
+    <div class="sec-header">
+      <div class="sec-eyebrow">DATA STRUCTURE</div>
+      <div class="sec-title">Price BST <span style="color:var(--rose)">— Binary Search Tree</span></div>
+      <div class="sec-desc">Left &lt; Parent &lt; Right. Insert flight prices — InOrder traversal gives sorted results in O(n).</div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">BST OPERATIONS <span class="ptag pt-rose">INSERT · SEARCH · TRAVERSAL</span></div>
+      <div class="d-flex gap-2 mb-3 flex-wrap">
+        <input class="form-control" id="bv" type="number" placeholder="Price (e.g. 25000)" style="max-width:200px"/>
+        <button class="btn-s btn-blue" onclick="bstIns()">INSERT</button>
+        <button class="btn-s btn-amber" onclick="bstSrch()">SEARCH</button>
+        <button class="btn-s btn-green" onclick="bstIn()">INORDER</button>
+        <button class="btn-s btn-blue" onclick="bstPre()">PREORDER</button>
+        <button class="btn-s btn-rose" onclick="bstReset()">RESET</button>
+      </div>
+      <div class="treebox" id="bstviz"></div>
+      <div class="logbox mt-3" id="bstlog"></div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="panel">
+          <div class="panel-title" style="color:var(--rose)">TRAVERSALS</div>
+          <table class="ctable">
+            <thead><tr><th>TYPE</th><th>ORDER</th><th>RESULT</th></tr></thead>
+            <tbody>
+              <tr><td>InOrder</td><td>L → Root → R</td><td>Sorted ascending ↑</td></tr>
+              <tr><td>PreOrder</td><td>Root → L → R</td><td>Tree structure copy</td></tr>
+              <tr><td>PostOrder</td><td>L → R → Root</td><td>Safe deletion</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel">
+          <div class="panel-title" style="color:var(--rose)">COMPLEXITY</div>
+          <table class="ctable">
+            <thead><tr><th>OP</th><th>AVERAGE</th><th>WORST</th></tr></thead>
+            <tbody>
+              <tr><td>Search</td><td>O(log n)</td><td>O(n)</td></tr>
+              <tr><td>Insert</td><td>O(log n)</td><td>O(n)</td></tr>
+              <tr><td>Delete</td><td>O(log n)</td><td>O(n)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ HASHING ══════ -->
+  <section class="section" id="sec-hashing">
+    <div class="sec-header">
+      <div class="sec-eyebrow">DATA STRUCTURE</div>
+      <div class="sec-title">Hash Table <span style="color:var(--amber)">— O(1) Lookup</span></div>
+      <div class="sec-desc">h(key) = Σ charCode % 13 &nbsp;|&nbsp; Collisions resolved by chaining (linked list per bucket).</div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">HASH OPERATIONS <span class="ptag pt-amber">INSERT · SEARCH · DELETE</span></div>
+      <div class="d-flex gap-2 mb-3 flex-wrap">
+        <input class="form-control" id="hk" placeholder="Flight ID (key)" style="max-width:180px"/>
+        <input class="form-control" id="hv" placeholder="Value (route info)" style="max-width:220px"/>
+        <button class="btn-s btn-blue" onclick="hIns()">INSERT</button>
+        <button class="btn-s btn-green" onclick="hSrch()">SEARCH</button>
+        <button class="btn-s btn-rose" onclick="hDel()">DELETE</button>
+        <button class="btn-s btn-amber" onclick="hFn2()">SHOW HASH(key)</button>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:8px">HASH TABLE (SIZE=13, CHAINING)</div>
+          <div id="htable"></div>
+        </div>
+        <div class="col-md-7">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:2px;margin-bottom:8px">OPERATION LOG</div>
+          <div class="logbox" id="hlog" style="height:270px"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ SORTING ══════ -->
+  <section class="section" id="sec-sorting">
+    <div class="sec-header">
+  <div class="sec-eyebrow">ALGORITHM VISUALIZATION</div>
+  <div class="sec-title">Fare Optimization <span style="color:var(--green)">— Merge Sort</span></div>
+  <div class="sec-desc">Search flights by route — results sorted by price using Merge Sort O(n log n).</div>
+</div>
+    <div class="panel">
+  <div class="panel-title">🔍 FLIGHT SEARCH <span class="ptag pt-green">MERGE SORT</span></div>
+  <div class="row g-2 mb-3">
+    <div class="col-md-3">
+      <label>From</label>
+      <select class="form-select" id="s-from">
+        <option value="">ALL</option>
+        <option>KHI</option><option>LHE</option><option>ISB</option>
+        <option>DXB</option><option>DOH</option><option>LHR</option><option>JFK</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label>To</label>
+      <select class="form-select" id="s-to">
+        <option value="">ALL</option>
+        <option>KHI</option><option>LHE</option><option>ISB</option>
+        <option>DXB</option><option>DOH</option><option>LHR</option><option>JFK</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label>Max Price ₨</label>
+      <input class="form-control" id="s-maxprice" type="number" placeholder="999999"/>
+    </div>
+    <div class="col-md-3 d-flex align-items-end gap-2">
+      <button class="btn-s btn-green flex-fill" onclick="searchAndSort()">🔍 SEARCH</button>
+      <button class="btn-s btn-rose flex-fill" onclick="resetSort()">RESET</button>
+    </div>
+  </div>
+
+  <!-- Search Results Table -->
+  <div id="s-results" class="mb-3" style="display:none">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:2px;margin-bottom:8px">
+      RESULTS — SORTED BY PRICE ↑ &nbsp;<span id="s-count" style="color:var(--amber)"></span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="xt">
+        <thead><tr><th>RANK</th><th>FLIGHT</th><th>FROM</th><th>TO</th><th>TIME</th><th>PRICE</th><th>STATUS</th></tr></thead>
+        <tbody id="s-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bars -->
+  <div class="panel-title mt-2">📊 MERGE SORT VISUALIZATION <span class="ptag pt-green">ANIMATED</span>
+    <button class="btn-s btn-green ms-auto" id="sbtn" onclick="startSort()" style="margin-left:auto">▶ VISUALIZE</button>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted)">
+      Cmps: <span id="cc" style="color:var(--amber)">0</span>
+      Merges: <span id="sc" style="color:var(--rose)">0</span>
+    </span>
+  </div>
+  <div class="bars-wrap" id="sbars"></div>
+  <div id="sarrd" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--dim);margin-top:8px;word-break:break-all"></div>
+  <div class="logbox mt-2" id="slog" style="height:120px"></div>
+</div>
+    <div class="row g-3">
+      <div class="col-md-7">
+        <div class="panel">
+          <div class="panel-title" style="color:var(--green)">ALGORITHM COMPLEXITY</div>
+          <table class="ctable">
+            <thead><tr><th>ALGORITHM</th><th>BEST</th><th>AVERAGE</th><th>WORST</th><th>SPACE</th></tr></thead>
+            <tbody>
+              <tr><td>Bubble Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr>
+              <tr><td>Selection Sort</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr>
+              <tr><td>Insertion Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>O(1)</td></tr>
+              <tr><td>Quick Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td><td>O(log n)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="panel">
+          <div class="panel-title" style="color:var(--green)">COLOR LEGEND</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;line-height:2.3;color:var(--muted)">
+            <span style="color:var(--blue)">█</span> Default bar<br>
+            <span style="color:var(--amber)">█</span> Comparing elements<br>
+            <span style="color:var(--rose)">█</span> Swapping elements<br>
+            <span style="color:var(--green)">█</span> Sorted position
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ SEATS ══════ -->
+  <section class="section" id="sec-seats">
+    <div class="sec-header">
+      <div class="sec-eyebrow">DATA STRUCTURE</div>
+      <div class="sec-title">Seat Allocation <span style="color:var(--blue)">— 2D Array</span></div>
+      <div class="sec-desc">seats[row][col] — 5×6 matrix. 0=free, 1=booked. O(1) access by index. Click a seat to book it.</div>
+    </div>
+    <div class="row g-3">
+      <div class="col-lg-5">
+        <div class="panel">
+          <div class="panel-title">AIRCRAFT SEAT MAP <span class="ptag pt-blue">seats[5][6]</span></div>
+          <div class="mb-3">
+            <label>Select Flight</label>
+            <select class="form-select" id="sflt" style="max-width:200px" onchange="initSeats()">
+              <option>PK-303</option><option>EK-607</option><option>QR-705</option><option>PK-747</option>
+            </select>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between;max-width:300px">
+            <span>BIZ ←</span><span>→ ECONOMY</span>
+          </div>
+          <div class="seatgrid" id="sgrid"></div>
+          <div class="mt-3" style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted)">
+            <span style="color:var(--green)">■</span> Free &nbsp;
+            <span style="color:var(--rose)">■</span> Booked &nbsp;
+            <span style="color:var(--blue)">■</span> Selected
+          </div>
+          <div class="mt-2" style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--dim);word-break:break-all">
+            seats[] → [<span id="sarr" style="color:var(--blue)"></span>]
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="panel">
+          <div class="panel-title">BOOKING FORM</div>
+          <div class="row g-2 mb-2">
+            <div class="col-6"><label>Passenger Name</label><input class="form-control" id="pname" placeholder="Ahmed Khan"/></div>
+            <div class="col-6"><label>Passport No.</label><input class="form-control" id="ppass" placeholder="AB-1234567"/></div>
+          </div>
+          <div class="mb-3"><label>Selected Seat</label><input class="form-control" id="psel" placeholder="Click a seat →" readonly/></div>
+          <div class="d-flex gap-2">
+            <button class="btn-s btn-blue flex-fill" onclick="bookSeat()">✓ CONFIRM BOOKING</button>
+            <button class="btn-s btn-rose flex-fill" onclick="cancelSeat()">✗ FREE SEAT</button>
+          </div>
+          <div class="logbox mt-3" id="seatlog" style="height:140px"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title" style="color:var(--blue)">2D ARRAY OPERATIONS</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);line-height:2">
+            <span style="color:var(--blue)">int seats[5][6];</span> &nbsp;// declare<br>
+            <span style="color:var(--green)">seats[r][c] == 0</span> &nbsp;// seat is FREE<br>
+            <span style="color:var(--rose)">seats[r][c] == 1</span> &nbsp;// seat is BOOKED<br>
+            Access time: <span style="color:var(--amber)">O(1)</span> &nbsp;|&nbsp; Space: O(rows × cols)<br>
+            Total seats: 5 × 6 = <span style="color:var(--blue)">30 per aircraft</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /main -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script></body>
+</html>
